@@ -6,17 +6,24 @@ import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 
+/* Utility function written by @viktorrn 24-8-13 */
+
 @CapacitorPlugin(name = "AppResources")
 public class AppResourcesPlugin extends Plugin {
 
-    private AppResources implementation = new AppResources();
+    private final AppResources implementation = new AppResources();
 
     @PluginMethod
-    public void echo(PluginCall call) {
+    public void getStringByKey(PluginCall call) {
         String value = call.getString("value");
 
         JSObject ret = new JSObject();
-        ret.put("value", implementation.echo(value));
-        call.resolve(ret);
+        try {
+            String internalValue = implementation.getStringByKey(value);
+            ret.put("value", internalValue);
+            call.resolve(ret);
+        } catch (Exception e) {
+            call.reject("Error occurred: " + e.getMessage());
+        }
     }
 }

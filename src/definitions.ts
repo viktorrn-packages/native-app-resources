@@ -1,3 +1,9 @@
+declare module '@capacitor/core' {
+  interface PluginRegistry {
+    AppResources: AppResourcesPlugin;
+  }
+}
+
 export interface AppResourcesPlugin {
-  echo(options: { value: string }): Promise<{ value: string }>;
+  getStringByKey(options: { key: string }): Promise<{ value: string }>;
 }
